@@ -4,17 +4,11 @@ using UnityEngine;
 
 public enum m_eGameDay 
 {
-    Mornig,
+    Morning,
     Day,
     Noon,
     Night,
 }
 
-public enum m_eHarvestType
-{
-    CanMorning,
-    CanDay,
-    CanNoon,
-    CanNight,
-}
+
 

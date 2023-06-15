@@ -2,8 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class Crop : MonoBehaviour
 {
+    public enum m_eHarvestType //수확 가능 조건
+    {
+        Morning,
+        Day,
+        Noon,
+        Night,
+    }
+
     private Transform m_trs;
 
     private SpriteRenderer m_spr;
@@ -12,23 +22,24 @@ public class Crop : MonoBehaviour
     [SerializeField]
     private int GrowTime = 5;
 
-    //시간 경과
+
     [SerializeField]
-    private int m_Time = 0;
+    private int m_Time = 0; //시간경과
 
     private int beforeTime;
 
-    private bool m_Grow = false;
+    private bool m_Grow = false; //성장여부
+
+    public bool m_CanHarvest = false; //수확 가능 여부
 
     [SerializeField]
-    private bool m_CanHarvest = false;
-
-    [SerializeField]
-    private m_eHarvestType m_HarvestType;
+    private m_eHarvestType m_CanHarvestType;
 
     void Start()
     {
         m_spr = GetComponent<SpriteRenderer>();
+
+        beforeTime = TimeManager.instance.CheckDay();
     }
 
 
@@ -38,7 +49,7 @@ public class Crop : MonoBehaviour
         CheckHarvest();
     }
 
-    private void Grow()
+    private void Grow() //성장
     {
         if (m_Grow == true)
         {
@@ -53,28 +64,25 @@ public class Crop : MonoBehaviour
         if (m_Time >= GrowTime)
         {
             m_Grow = true;
-            m_spr.color = Color.red;
+            m_spr.color = Color.red; // 색 바뀌는건 임시 스프라이트 바꿀때 삭제
         }
     }
 
-    private void CheckHarvest()
+    private void CheckHarvest() //수확가능 조건확인
     {
-        if(m_Grow == false)
+
+        if (m_Grow == false)
         {
             return;
         }
-        switch (m_HarvestType)
+
+        if (m_CanHarvestType.ToString() == TimeManager.instance.GameDay.ToString())
         {
-            case (m_eHarvestType.CanMorning):
-                if (TimeManager.instance.GameDay == m_eGameDay.Mornig)
-                {
-                    m_CanHarvest = true;
-                }
-                else
-                {
-                    m_CanHarvest = false;
-                }
-                break;
+            m_CanHarvest = true;
+        }
+        else
+        {
+            m_CanHarvest = false;
         }
 
 

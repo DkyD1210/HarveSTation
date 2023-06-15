@@ -54,7 +54,7 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         SetTime();
-        Debug.Log($"{m_MainDay} : {m_MainHour} : {m_MainMinute} : {m_MainSecond}");
+        //Debug.Log($"{m_MainDay} : {m_MainHour} : {m_MainMinute} : {m_MainSecond}");
     }
 
     private void SetTime()
@@ -79,7 +79,7 @@ public class TimeManager : MonoBehaviour
         switch (m_MainHour)
         {
             case (0):
-                GameDay = m_eGameDay.Mornig;
+                GameDay = m_eGameDay.Morning;
                 break;
             case (6):
                 GameDay = m_eGameDay.Day;
