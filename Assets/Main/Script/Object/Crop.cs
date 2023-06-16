@@ -6,12 +6,23 @@ using UnityEngine;
 
 public class Crop : MonoBehaviour
 {
-    public enum m_eHarvestType //수확 가능 조건
+
+    //수확 가능 조건들
+    public enum m_eTimeType //시간타입
     {
+        Anything,
         Morning,
         Day,
-        Noon,
         Night,
+    }
+
+    public enum m_eWeatherType //날씨타입
+    {
+        Anythnig,
+        Sun,
+        Wind,
+        Rain,
+        heat,
     }
 
     private Transform m_trs;
@@ -33,13 +44,16 @@ public class Crop : MonoBehaviour
     public bool m_CanHarvest = false; //수확 가능 여부
 
     [SerializeField]
-    private m_eHarvestType m_CanHarvestType;
+    private m_eTimeType m_TimeType;
+
+    [SerializeField]
+    private m_eWeatherType m_WeatherType;
 
     void Start()
     {
         m_spr = GetComponent<SpriteRenderer>();
 
-        beforeTime = TimeManager.instance.CheckDay();
+        beforeTime = TimeManager.Instance.CheckDay();
     }
 
 
@@ -56,10 +70,10 @@ public class Crop : MonoBehaviour
             return;
         }
 
-        if (TimeManager.instance.CheckDay() != beforeTime)
+        if (TimeManager.Instance.CheckDay() != beforeTime)
         {
             m_Time++;
-            beforeTime = TimeManager.instance.CheckDay();
+            beforeTime = TimeManager.Instance.CheckDay();
         }
         if (m_Time >= GrowTime)
         {
@@ -70,19 +84,35 @@ public class Crop : MonoBehaviour
 
     private void CheckHarvest() //수확가능 조건확인
     {
-
         if (m_Grow == false)
         {
             return;
         }
 
-        if (m_CanHarvestType.ToString() == TimeManager.instance.GameDay.ToString())
+        if (m_TimeType == m_eTimeType.Anything && m_WeatherType == m_eWeatherType.Anythnig)
         {
             m_CanHarvest = true;
         }
         else
         {
-            m_CanHarvest = false;
+            m_eWeather EWeather = TimeManager.Instance.m_WeaTher;
+            m_eGameDay EDay = TimeManager.Instance.m_GameDay;
+            if (m_TimeType.ToString() == EDay.ToString() && m_WeatherType == m_eWeatherType.Anythnig) 
+            {
+                m_CanHarvest = true;
+            }
+            else if(m_TimeType == m_eTimeType.Anything && m_WeatherType.ToString() == EWeather.ToString())
+            {
+                m_CanHarvest = true;
+            }
+            else if(m_TimeType.ToString() == EDay.ToString() && m_WeatherType.ToString() == EWeather.ToString())
+            {
+                m_CanHarvest = true;
+            }
+            else
+            {
+                m_CanHarvest = false;
+            }
         }
 
 

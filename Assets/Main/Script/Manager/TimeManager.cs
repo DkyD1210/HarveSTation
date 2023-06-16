@@ -1,44 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+
 
 public class TimeManager : MonoBehaviour
 {
 
-    public static TimeManager instance;
+    public static TimeManager Instance;
 
     [Header("시간과 날짜")]
     //초
     private float m_MainSecond;
     private int m_MaxSecond = 60;
     //분
-    [SerializeField]
-    private int m_MainMinute;
+    public int m_MainMinute;
     private int m_MaxMinute = 60;
 
     //시
-    [SerializeField]
-    private int m_MainHour;
+    public int m_MainHour;
     private int m_MaxHour = 24;
 
     //날
-    [SerializeField]
-    private int m_MainDay;
+    public int m_MainDay = 1;
 
     [Tooltip("현실 1초당 인게임 초 값")]
     [SerializeField]
     private int m_GameTime = 42;
 
     [Header("시간대")]
-    public m_eGameDay GameDay;
+    public m_eGameDay m_GameDay;
+
+    [SerializeField]
+    private bool TimeStop = false;
+
+    
+    [Header("날씨")]
+    public m_eWeather m_WeaTher;
+
 
     private void Awake()
     {
-        if(instance == null)
+        if(Instance == null)
         {
-            instance = this;
+            Instance = this;
         }
         else
         {
@@ -59,6 +63,11 @@ public class TimeManager : MonoBehaviour
 
     private void SetTime()
     {
+        if(TimeStop == true)
+        {
+            return;
+        }
+
         m_MainSecond += Time.deltaTime * m_GameTime;
         if (m_MainSecond >= m_MaxSecond)
         {
@@ -74,21 +83,19 @@ public class TimeManager : MonoBehaviour
         {
             m_MainHour = 0;
             m_MainDay++;
+            SetWeather();
         }
 
         switch (m_MainHour)
         {
-            case (0):
-                GameDay = m_eGameDay.Morning;
-                break;
             case (6):
-                GameDay = m_eGameDay.Day;
+                m_GameDay = m_eGameDay.Morning;
                 break;
             case (12):
-                GameDay = m_eGameDay.Noon;
+                m_GameDay = m_eGameDay.Day;
                 break;
             case (18):
-                GameDay = m_eGameDay.Night;
+                m_GameDay = m_eGameDay.Night;
                 break;
         }
     }
@@ -97,5 +104,11 @@ public class TimeManager : MonoBehaviour
     {
         int _day = m_MainDay;
         return _day;
+    }
+
+    private void SetWeather()
+    {
+        int weather = Random.Range(0, 3);
+        m_WeaTher = (m_eWeather)weather;
     }
 }

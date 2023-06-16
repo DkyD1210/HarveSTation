@@ -6,8 +6,15 @@ public enum m_eGameDay
 {
     Morning,
     Day,
-    Noon,
     Night,
+}
+
+public enum m_eWeather
+{
+    Sun,
+    Wind,
+    Rain,
+    heat,
 }
 
 
