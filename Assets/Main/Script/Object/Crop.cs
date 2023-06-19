@@ -114,7 +114,6 @@ public class Crop : MonoBehaviour
                 m_CanHarvest = false;
             }
         }
-
-
     }
+
 }

@@ -67,8 +67,16 @@ public class Player : MonoBehaviour
 
                 if (_crop.m_CanHarvest == true)
                 {
-                    Debug.Log("수확 성공");
-                    Destroy(obj);
+                    int SlotNum = InventoryManager.Instance.CheckEmptyInventory(_crop.name);
+                    if (SlotNum == -1)
+                    {
+                        Debug.Log("인벤토리 공간 없음");
+                    }
+                    else
+                    {
+                        Debug.Log("수확 성공");
+                        Destroy(obj);
+                    }
                 }
                 else
                 {
