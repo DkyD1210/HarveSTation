@@ -19,11 +19,6 @@ public class InventoryManager : MonoBehaviour
     private List<Transform> m_TrsSlotList = new List<Transform>();
 
 
-    public List<string> m_SlotNameList = new List<string>();
-
-
-    public List<int> m_SlotItmeCountList = new List<int>();
-
     private void Awake()
     {
         if (Instance == null)
@@ -39,6 +34,7 @@ public class InventoryManager : MonoBehaviour
     {
         m_SlotList.AddRange(TrsInventory.GetComponentsInChildren<UIInventorySlot>());
         GetSlotTranform();
+
 
     }
 
@@ -85,7 +81,7 @@ public class InventoryManager : MonoBehaviour
         }
         for (int i = 0; i < count; i++)
         {
-            if (m_SlotList[i].GetItemName() == null)
+            if (m_SlotList[i].GetItemName() == string.Empty)
             {
                 return i;
             }
@@ -93,9 +89,9 @@ public class InventoryManager : MonoBehaviour
         return -1;
     }
 
-    private void CheckInventoryList()
+    public void GetItem(int SlotNum,string _name, Sprite _spr)
     {
-
+        m_SlotList[SlotNum].SetItem(_name, _spr);
     }
 
 

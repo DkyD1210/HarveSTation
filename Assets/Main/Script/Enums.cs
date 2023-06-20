@@ -14,7 +14,14 @@ public enum m_eWeather
     Sun,
     Wind,
     Rain,
-    heat,
+    Heat,
+}
+
+public enum m_eCropName
+{
+    Potato = 0,
+    Tomato = 1,
+    
 }
 
 

@@ -26,6 +26,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private List<GameObject> m_InCropsList; //범위 안 작물 오브젝트 리스트
 
+    [SerializeField]
+    private m_eCropName m_CropName;
+
     void Start()
     {
         PlayerBox = GetComponent<BoxCollider2D>();
@@ -38,6 +41,7 @@ public class Player : MonoBehaviour
     {
         PlayerMove();
         HarvestAct();
+        PlantCropAct();
     }
 
     private void PlayerMove()
@@ -67,7 +71,7 @@ public class Player : MonoBehaviour
 
                 if (_crop.m_CanHarvest == true)
                 {
-                    int SlotNum = InventoryManager.Instance.CheckEmptyInventory(_crop.name);
+                    int SlotNum = InventoryManager.Instance.CheckEmptyInventory(_crop.ReturnName());
                     if (SlotNum == -1)
                     {
                         Debug.Log("인벤토리 공간 없음");
@@ -75,6 +79,7 @@ public class Player : MonoBehaviour
                     else
                     {
                         Debug.Log("수확 성공");
+                        _crop.GetItem(SlotNum);
                         Destroy(obj);
                     }
                 }
@@ -86,8 +91,26 @@ public class Player : MonoBehaviour
 
 
         }
-
     }
+
+    private void PlantCropAct()
+    {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            int count = System.Enum.GetValues(typeof(m_eCropName)).Length;
+            m_CropName++;
+            if ((int)m_CropName >= count)
+            {
+                m_CropName = 0;
+            }
+
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            GameManager.Instance.PlantCrop(transform.position, m_CropName);
+        }
+    }
+
 
     public void InCrops(GameObject _obj, bool _bool)
     {

@@ -50,10 +50,13 @@ public class UIInventorySlot : MonoBehaviour
     }
 
 
-    public void SetItem(Sprite sprite)
+    public void SetItem(string _name ,Sprite sprite)
     {
         Image image = UIItem.GetComponent<Image>();
         image.sprite = sprite;
+
+        ItemName = _name;
+        m_ItemCount++;
     }
 
     public string GetItemName()

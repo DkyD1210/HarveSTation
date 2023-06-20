@@ -25,7 +25,7 @@ public class TimeManager : MonoBehaviour
 
     [Tooltip("현실 1초당 인게임 초 값")]
     [SerializeField]
-    private int m_GameTime = 42;
+    private int m_GameTime = 90;
 
     [Header("시간대")]
     public m_eGameDay m_GameDay;
@@ -100,10 +100,16 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    public int CheckTime()
+    {
+        int _hour = m_MainHour;
+        return _hour;
+    }
+
     public int CheckDay()
     {
-        int _day = m_MainDay;
-        return _day;
+        int _Day = m_MainDay;
+        return _Day;
     }
 
     private void SetWeather()

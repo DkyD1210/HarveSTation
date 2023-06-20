@@ -29,13 +29,11 @@ public class Crop : MonoBehaviour
 
     private SpriteRenderer m_spr;
 
-    [Header("작물 시간")]
+    [Header("작물 성장")]
     [SerializeField]
-    private int GrowTime = 5;
+    private int GrowTime = 5; //hour 기준 1일 24
 
-
-    [SerializeField]
-    private int m_Time = 0; //시간경과
+    private int m_Time = 0; //시간경과;
 
     private int beforeTime;
 
@@ -43,17 +41,24 @@ public class Crop : MonoBehaviour
 
     public bool m_CanHarvest = false; //수확 가능 여부
 
+    [Header("작물 수확 조건")]
+    [Tooltip("작물 수확 가능 시간")]
     [SerializeField]
     private m_eTimeType m_TimeType;
 
+    [Tooltip("작물 수확 가능 날씨")]
     [SerializeField]
     private m_eWeatherType m_WeatherType;
+
+    [Header("작물 이름")]
+    [SerializeField]
+    private m_eCropName m_ThisName;
 
     void Start()
     {
         m_spr = GetComponent<SpriteRenderer>();
 
-        beforeTime = TimeManager.Instance.CheckDay();
+        beforeTime = TimeManager.Instance.CheckTime();
     }
 
 
@@ -70,10 +75,10 @@ public class Crop : MonoBehaviour
             return;
         }
 
-        if (TimeManager.Instance.CheckDay() != beforeTime)
+        if (TimeManager.Instance.CheckTime() != beforeTime)
         {
             m_Time++;
-            beforeTime = TimeManager.Instance.CheckDay();
+            beforeTime = TimeManager.Instance.CheckTime();
         }
         if (m_Time >= GrowTime)
         {
@@ -116,4 +121,13 @@ public class Crop : MonoBehaviour
         }
     }
 
+    public void GetItem(int _slotnum)
+    {
+        InventoryManager.Instance.GetItem(_slotnum ,m_ThisName.ToString(), m_spr.sprite);
+    }
+
+    public string ReturnName()
+    {
+        return m_ThisName.ToString();
+    }
 }
