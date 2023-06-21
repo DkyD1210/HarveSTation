@@ -31,16 +31,31 @@ public class TimeManager : MonoBehaviour
     public m_eGameDay m_GameDay;
 
     [SerializeField]
-    private bool TimeStop = false;
+    private GameObject[] TimeStopUILIst;
 
-    
+    private bool TimeStop
+    {
+        get
+        {
+            if (InventoryManager.Instance.m_InventoryOpen == true || CookManager.Instance.m_IsCook == true)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+
     [Header("³¯¾¾")]
     public m_eWeather m_WeaTher;
 
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null)
         {
             Instance = this;
         }
@@ -58,12 +73,11 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         SetTime();
-        //Debug.Log($"{m_MainDay} : {m_MainHour} : {m_MainMinute} : {m_MainSecond}");
     }
 
     private void SetTime()
     {
-        if(TimeStop == true)
+        if (TimeStop == true)
         {
             return;
         }
@@ -117,4 +131,5 @@ public class TimeManager : MonoBehaviour
         int weather = Random.Range(0, 3);
         m_WeaTher = (m_eWeather)weather;
     }
+
 }

@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private m_eCropName m_CropName;
 
+    private bool IsCook = false;
+    
+
     void Start()
     {
         PlayerBox = GetComponent<BoxCollider2D>();
@@ -39,6 +42,18 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        if (InventoryManager.Instance.m_InventoryOpen == true)
+        {
+            return;
+        }
+
+        CookAct();
+
+        if(IsCook == true)
+        {
+            return;
+        }
+
         PlayerMove();
         HarvestAct();
         PlantCropAct();
@@ -46,6 +61,7 @@ public class Player : MonoBehaviour
 
     private void PlayerMove()
     {
+
         PlayerDir.x = Input.GetAxisRaw("Horizontal");
         PlayerDir.y = Input.GetAxisRaw("Vertical");
 
@@ -121,6 +137,19 @@ public class Player : MonoBehaviour
         else
         {
             m_InCropsList.Remove(_obj.gameObject);
+        }
+    }
+
+    private void CookAct()
+    {
+        bool GetKey = Input.GetKeyDown(KeyCode.J);
+        RaycastHit2D hit =  Physics2D.BoxCast(PlayerBox.bounds.center, new Vector2(0.1f, 0.1f), 0f, Vector3.up, 10f, LayerMask.GetMask("CookWare"));
+        if (hit)
+        {
+            if(GetKey)
+            {
+                CookManager.Instance.SetCookUI();
+            }
         }
     }
 }

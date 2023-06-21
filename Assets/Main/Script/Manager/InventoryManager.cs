@@ -18,6 +18,10 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private List<Transform> m_TrsSlotList = new List<Transform>();
 
+    public bool m_InventoryOpen
+    {
+        get => Inventory.activeSelf;
+    }
 
     private void Awake()
     {
@@ -48,14 +52,7 @@ public class InventoryManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.I))
         {
-            if (Inventory.activeSelf == false)
-            {
-                Inventory.SetActive(true);
-            }
-            else
-            {
-                Inventory.SetActive(false);
-            }
+            Inventory.SetActive(!Inventory.activeSelf);
         }
     }
 
@@ -72,7 +69,7 @@ public class InventoryManager : MonoBehaviour
     public int CheckEmptyInventory(string _name)
     {
         int count = m_SlotList.Count;
-        for(int i = 0; i < count; i++)
+        for (int i = 0; i < count; i++)
         {
             if (m_SlotList[i].GetItemName() == _name)
             {
@@ -89,7 +86,7 @@ public class InventoryManager : MonoBehaviour
         return -1;
     }
 
-    public void GetItem(int SlotNum,string _name, Sprite _spr)
+    public void GetItem(int SlotNum, string _name, Sprite _spr)
     {
         m_SlotList[SlotNum].SetItem(_name, _spr);
     }
