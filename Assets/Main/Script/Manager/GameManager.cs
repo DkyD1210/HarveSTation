@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform m_TrsCropLayer;
 
+    [SerializeField]
+    private int Money;
+
     private void Awake()
     {
         if (Instance == null)

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8701893067584238980}
   - component: {fileID: 8701893067584238981}
   - component: {fileID: 8701893067584238979}
+  - component: {fileID: 9078561685812755106}
   - component: {fileID: 3079481740961712019}
   - component: {fileID: 8975404115060563096}
   m_Layer: 0
@@ -103,7 +104,20 @@ MonoBehaviour:
   m_CanHarvest: 0
   m_TimeType: 0
   m_WeatherType: 0
-  m_ThisName: 0
+  m_CropName: 0
+--- !u!114 &9078561685812755106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701893067584238983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 542c8effcd10fbc408291fa5165a7242, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ItemName: 1001
 --- !u!61 &3079481740961712019
 BoxCollider2D:
   m_ObjectHideFlags: 0

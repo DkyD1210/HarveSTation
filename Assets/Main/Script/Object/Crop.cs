@@ -52,7 +52,7 @@ public class Crop : MonoBehaviour
 
     [Header("작물 이름")]
     [SerializeField]
-    private m_eCropName m_ThisName;
+    private m_eCropName m_CropName;
 
     void Start()
     {
@@ -121,13 +121,8 @@ public class Crop : MonoBehaviour
         }
     }
 
-    public void GetItem(int _slotnum)
-    {
-        InventoryManager.Instance.GetItem(_slotnum ,m_ThisName.ToString(), m_spr.sprite);
-    }
 
-    public string ReturnName()
-    {
-        return m_ThisName.ToString();
-    }
+
+
+
 }

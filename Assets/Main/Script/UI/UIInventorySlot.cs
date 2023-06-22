@@ -19,12 +19,16 @@ public class UIInventorySlot : MonoBehaviour
     [SerializeField]
     private string ItemName;
 
+    [SerializeField]
+    private Image ItemImage;
+
     void Start()
     {
         ItemCountText = GetComponentInChildren<TextMeshProUGUI>();
         UIItem = transform.Find("Item");
     }
 
+    
 
     void Update()
     {
@@ -33,7 +37,7 @@ public class UIInventorySlot : MonoBehaviour
 
     private void SetItemCountText()
     {
-        if(ItemName == null)
+        if (ItemName == null)
         {
             return;
         }
@@ -50,18 +54,37 @@ public class UIInventorySlot : MonoBehaviour
     }
 
 
-    public void SetItem(string _name ,Sprite sprite)
+    public int SetItem(string _name, Sprite sprite)
     {
-        Image image = UIItem.GetComponent<Image>();
-        image.sprite = sprite;
+        ItemImage = UIItem.GetComponent<Image>();
+        ItemImage.sprite = sprite;
 
         ItemName = _name;
         m_ItemCount++;
+
+        return m_ItemCount;
     }
 
     public string GetItemName()
     {
         return ItemName;
+    }
+
+    public bool RemoveCount(int count)
+    {
+        if ((m_ItemCount - count) <= 0)
+        {
+            ItemImage = UIItem.GetComponent<Image>();
+            ItemImage.sprite = null;
+
+            m_ItemCount = 0;
+            return true;
+        }
+        else
+        {
+            m_ItemCount -= count;
+            return false;
+        }
     }
 
 }

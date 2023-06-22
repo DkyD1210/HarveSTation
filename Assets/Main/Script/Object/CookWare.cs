@@ -6,8 +6,8 @@ public class CookWare : MonoBehaviour
 {
     public enum m_eCookWare
     {
-        Range,
-        Oven,
+        Range = 1000,
+        Oven = 2000,
     }
 
     public m_eCookWare m_WareType;

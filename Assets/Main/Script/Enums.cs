@@ -21,7 +21,15 @@ public enum m_eCropName
 {
     Potato = 0,
     Tomato = 1,
-    
+}
+
+public enum m_eItemName
+{
+    Potato = 1001,
+    Tomato = 1002,
+
+    FridePotato = 2001,
+    TomatoSoup  = 2002,
 }
 
 

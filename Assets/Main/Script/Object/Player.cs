@@ -84,10 +84,11 @@ public class Player : MonoBehaviour
             {
                 GameObject obj = m_InCropsList[i];
                 Crop _crop = obj.GetComponent<Crop>();
+                Item _item = obj.GetComponent<Item>();
 
                 if (_crop.m_CanHarvest == true)
                 {
-                    int SlotNum = InventoryManager.Instance.CheckEmptyInventory(_crop.ReturnName());
+                    int SlotNum = InventoryManager.Instance.CheckEmptyInventory(_item.ReturnName());
                     if (SlotNum == -1)
                     {
                         Debug.Log("인벤토리 공간 없음");
@@ -95,7 +96,7 @@ public class Player : MonoBehaviour
                     else
                     {
                         Debug.Log("수확 성공");
-                        _crop.GetItem(SlotNum);
+                        _item.GetItem(SlotNum);
                         Destroy(obj);
                     }
                 }
