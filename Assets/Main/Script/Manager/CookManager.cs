@@ -58,17 +58,25 @@ public class CookManager : MonoBehaviour
 
     private void SetNeedItem()
     {
-        UseItem("Potato", 8, m_eItemName.FridePotato.ToString());
+        UseItem(m_eItemName.Potato.ToString(), 8, m_eItemName.FridePotato.ToString());
     }
 
+    /// <summary>
+    /// 재료변환
+    /// </summary>
+    /// <param name="_name">필요한 재료 아이템 이름</param>
+    /// <param name="_needCount">필요한 재료 아이템 갯수</param>
+    /// <param name="_returnItemName">변환 아이템 이름</param>
     private void UseItem(string _name, int _needCount, string _returnItemName)
     {
         int CropslotNum = InventoryManager.Instance.CheckEmptyInventory(_name);
         int CropCount = InventoryManager.Instance.FindItemCount(_name);
-        int ItemSlotNum = InventoryManager.Instance.CheckEmptyInventory(_returnItemName);
+        
 
         if ((CropCount - _needCount) >= 0)
         {
+            
+            int ItemSlotNum = InventoryManager.Instance.CheckEmptyInventory(_returnItemName);
             if (ItemSlotNum == -1)
             {
                 Debug.Log("인벤토리 공간 부족");
@@ -76,7 +84,10 @@ public class CookManager : MonoBehaviour
             else
             {
                 InventoryManager.Instance.RemoveItem(CropslotNum, _needCount);
-                //Item returnItem =
+                GameObject returnItemobj = m_ItemList[FindItemIndex(_returnItemName)];
+                Item returnItem = returnItemobj.GetComponent<Item>();
+
+                returnItem.GetItem(ItemSlotNum);
                 
                 Debug.Log("조리시작");
             }
@@ -85,5 +96,18 @@ public class CookManager : MonoBehaviour
         {
             Debug.Log("재료부족");
         }
+    }
+
+    private int FindItemIndex(string _name)
+    {
+        int count = m_ItemList.Count;
+        for (int index = 0; index < count; index++)
+        {
+            if(m_ItemList[index].ToString() == _name)
+            {
+                return index;
+            }
+        }
+        return -999;
     }
 }

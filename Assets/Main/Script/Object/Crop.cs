@@ -30,8 +30,19 @@ public class Crop : MonoBehaviour
     private SpriteRenderer m_spr;
 
     [Header("작물 성장")]
+
+    [Tooltip("경과 날짜")]
     [SerializeField]
-    private int GrowTime = 5; //hour 기준 1일 24
+    private int m_GrowDay;
+
+    [SerializeField]
+    private int m_GrowHour;
+
+    [SerializeField]
+    private int m_GrowMinute;
+
+    private int GrowTime;
+
 
     private int m_Time = 0; //시간경과;
 
@@ -57,6 +68,7 @@ public class Crop : MonoBehaviour
     void Start()
     {
         m_spr = GetComponent<SpriteRenderer>();
+        SetGrowTime();
 
         beforeTime = TimeManager.Instance.CheckTime();
     }
@@ -121,8 +133,12 @@ public class Crop : MonoBehaviour
         }
     }
 
-
-
+    private void SetGrowTime()
+    {
+        m_GrowHour += m_GrowDay * 24;
+        m_GrowMinute += m_GrowHour * 60;
+        GrowTime = m_GrowMinute;
+    }
 
 
 }

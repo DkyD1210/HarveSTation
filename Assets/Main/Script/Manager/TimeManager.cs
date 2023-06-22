@@ -116,8 +116,8 @@ public class TimeManager : MonoBehaviour
 
     public int CheckTime()
     {
-        int _hour = m_MainHour;
-        return _hour;
+        int _minute = m_MainMinute;
+        return _minute;
     }
 
     public int CheckDay()

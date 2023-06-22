@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3079481740961712019}
   - component: {fileID: 8975404115060563096}
   m_Layer: 0
-  m_Name: Potato
+  m_Name: potato
   m_TagString: Crop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -100,7 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eeb06af345af4348a52a5f499a1f5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GrowTime: 5
+  m_GrowDay: 0
+  m_GrowHour: 0
+  m_GrowMinute: 10
   m_CanHarvest: 0
   m_TimeType: 0
   m_WeatherType: 0
