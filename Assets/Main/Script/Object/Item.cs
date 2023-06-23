@@ -7,18 +7,18 @@ public class Item : MonoBehaviour
 
     private SpriteRenderer m_spr;
 
-    [SerializeField]
-    private m_eItemName m_ItemName;
+
+    public m_eItemName m_ItemName;
 
     private void Start()
     {
-        m_spr = GetComponent<SpriteRenderer>();
-
+       
 
     }
 
     public void GetItem(int _slotnum)
     {
+        m_spr = GetComponent<SpriteRenderer>();
         InventoryManager.Instance.GetItem(_slotnum, m_ItemName.ToString(), m_spr.sprite);
     }
 

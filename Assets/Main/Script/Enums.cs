@@ -21,15 +21,20 @@ public enum m_eCropName
 {
     Potato = 0,
     Tomato = 1,
+    Wheat  = 2,
 }
 
 public enum m_eItemName
 {
     Potato = 1001,
     Tomato = 1002,
+    Wheat  = 1003,
+
 
     FridePotato = 2001,
     TomatoSoup  = 2002,
+    Bread       = 2003,
+    Sandwitch   = 2004,
 }
 
 

@@ -13,9 +13,9 @@ public class CookManager : MonoBehaviour
     [SerializeField]
     private Button m_Button;
 
-    [SerializeField]
-    private List<GameObject> m_ItemList;
-    
+    private List<GameObject> m_ItemList = new List<GameObject>();
+
+
     public bool m_IsCook
     {
         get { return m_CookUI.activeSelf; }
@@ -36,6 +36,7 @@ public class CookManager : MonoBehaviour
     void Start()
     {
         m_Button.onClick.AddListener(SetNeedItem);
+        m_ItemList = GameManager.Instance.m_ItemList;
     }
 
     void Update()
@@ -101,13 +102,14 @@ public class CookManager : MonoBehaviour
     private int FindItemIndex(string _name)
     {
         int count = m_ItemList.Count;
-        for (int index = 0; index < count; index++)
+        for (int i = 0; i < count; i++)
         {
-            if(m_ItemList[index].ToString() == _name)
+            Item item =  m_ItemList[i].GetComponent<Item>();
+            if(item.m_ItemName.ToString() == _name)
             {
-                return index;
+                return i;
             }
         }
-        return -999;
+        return -1;
     }
 }

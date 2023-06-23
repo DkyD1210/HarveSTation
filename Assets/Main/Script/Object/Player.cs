@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     private Vector3 PlayerDir;
 
 
+
     [Header("이동")]
 
     [Tooltip("이동속도")]
@@ -29,8 +30,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     private m_eCropName m_CropName;
 
-    private bool IsCook = false;
-    
+    private bool IsCook
+    {
+        get => CookManager.Instance.m_IsCook;
+    }
+
+    private float ray = 1;//raycast 방향용
 
     void Start()
     {
@@ -49,10 +54,12 @@ public class Player : MonoBehaviour
 
         CookAct();
 
-        if(IsCook == true)
+        if (IsCook == true)
         {
+            PlayerRigid.constraints = RigidbodyConstraints2D.FreezeAll;
             return;
         }
+        PlayerRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         PlayerMove();
         HarvestAct();
@@ -144,10 +151,18 @@ public class Player : MonoBehaviour
     private void CookAct()
     {
         bool GetKey = Input.GetKeyDown(KeyCode.J);
-        RaycastHit2D hit =  Physics2D.BoxCast(PlayerBox.bounds.center, new Vector2(0.1f, 0.1f), 0f, Vector3.up, 10f, LayerMask.GetMask("CookWare"));
+        if (PlayerDir.y == 1)
+        {
+            ray = 1f;
+        }
+        else if (PlayerDir.y == -1)
+        {
+            ray = -1f;
+        }
+        RaycastHit2D hit = Physics2D.BoxCast(PlayerBox.bounds.center, new Vector2(0.1f, 0.1f), 0f, new Vector3(0f, ray, 0f), 10f, LayerMask.GetMask("CookWare"));
         if (hit)
         {
-            if(GetKey)
+            if (GetKey)
             {
                 CookManager.Instance.SetCookUI();
             }

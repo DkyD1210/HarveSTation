@@ -4673,8 +4673,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CookUI: {fileID: 815350927}
   m_Button: {fileID: 92373800}
-  m_ItemList:
-  - {fileID: 4130588009968617721, guid: f8520605a3c668a41b69a06223d8b7e7, type: 3}
 --- !u!224 &1209214436 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8795240938295920167, guid: 2e983103a396f214c97a3bb190b08612, type: 3}
@@ -5859,9 +5857,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ecca61eada5dc408e5d70170568903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_CropObjList:
+  m_ItemList:
   - {fileID: 8701893067584238983, guid: a594f034f72997d4eb20b35e1d66cdf9, type: 3}
   - {fileID: 6938607784024749669, guid: 8f3f8eb70dc5e994cb1b1e8a882c451c, type: 3}
+  - {fileID: 1265735823179924770, guid: 96165fbf1a89e1b4886912bfb4b39285, type: 3}
+  - {fileID: 4130588009968617721, guid: f8520605a3c668a41b69a06223d8b7e7, type: 3}
+  - {fileID: 4779947956108532515, guid: 4b76b7c9ece20ae4a9280e2072d70657, type: 3}
+  - {fileID: 8811992278930547586, guid: 6ac5d38d12e61da45af2028776915285, type: 3}
+  - {fileID: 2999596656120510003, guid: 045c2d4088dab3a439d70273c15f049b, type: 3}
   m_TrsCropLayer: {fileID: 1489588676}
   Money: 0
 --- !u!4 &1627420202
