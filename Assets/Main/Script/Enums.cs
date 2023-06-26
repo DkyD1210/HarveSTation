@@ -19,22 +19,22 @@ public enum m_eWeather
 
 public enum m_eCropName
 {
-    Potato = 0,
-    Tomato = 1,
-    Wheat  = 2,
+    Potato,
+    Tomato,
+    Wheat,
 }
 
 public enum m_eItemName
 {
-    Potato = 1001,
-    Tomato = 1002,
-    Wheat  = 1003,
+    Potato,
+    Tomato,
+    Wheat,
 
 
-    FridePotato = 2001,
-    TomatoSoup  = 2002,
-    Bread       = 2003,
-    Sandwitch   = 2004,
+    FridePotato,
+    TomatoSoup,
+    Bread,
+    Sandwitch,
 }
 
 

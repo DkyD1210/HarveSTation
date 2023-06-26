@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-
     private SpriteRenderer m_spr;
 
-
-    public m_eItemName m_ItemName;
+    [SerializeField]
+    private m_eItemName m_ItemName;
 
     private void Start()
     {
-       
-
+        m_spr = GetComponent<SpriteRenderer>();
     }
 
     public void GetItem(int _slotnum)

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Crop
   - Stove
+  - Shop
+  - Food
   layers:
   - Default
   - TransparentFX
@@ -13,7 +15,7 @@ TagManager:
   - Player
   - Water
   - UI
-  - CookWare
+  - InteractionObject
   - 
   - 
   - 
