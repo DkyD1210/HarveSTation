@@ -13,15 +13,15 @@ public class TimeManager : MonoBehaviour
     private float m_MainSecond;
     private int m_MaxSecond = 60;
     //분
-    public int m_MainMinute;
+    private int m_MainMinute;
     private int m_MaxMinute = 60;
 
     //시
-    public int m_MainHour;
+    private int m_MainHour;
     private int m_MaxHour = 24;
 
     //날
-    public int m_MainDay = 1;
+    private int m_MainDay = 1;
 
     [Tooltip("현실 1초당 인게임 초 값")]
     [SerializeField]
@@ -37,7 +37,7 @@ public class TimeManager : MonoBehaviour
     {
         get
         {
-            if (InventoryManager.Instance.m_InventoryOpen == true || CookManager.Instance.m_IsCook == true)
+            if (UIManager.Instance.m_IsUIOpen == true)
             {
                 return true;
             }
@@ -73,6 +73,7 @@ public class TimeManager : MonoBehaviour
     void Update()
     {
         SetTime();
+        UIManager.Instance.SetTimeText(m_MainMinute, m_MainHour, m_MainDay);
     }
 
     private void SetTime()

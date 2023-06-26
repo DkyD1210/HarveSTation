@@ -7,19 +7,12 @@ public class CookManager : MonoBehaviour
 {
     public static CookManager Instance;
 
-    [SerializeField]
-    private GameObject m_CookUI;
 
     [SerializeField]
     private Button m_Button;
 
     private List<GameObject> m_ItemList = new List<GameObject>();
 
-
-    public bool m_IsCook
-    {
-        get { return m_CookUI.activeSelf; }
-    }
 
     private void Awake()
     {
@@ -37,24 +30,6 @@ public class CookManager : MonoBehaviour
     {
         m_Button.onClick.AddListener(SetNeedItem);
         m_ItemList = GameManager.Instance.m_ItemList;
-    }
-
-    void Update()
-    {
-        Cooking();
-    }
-
-    private void Cooking()
-    {
-        if (m_IsCook == false)
-        {
-            return;
-        }
-    }
-
-    public void SetCookUI()
-    {
-        m_CookUI.SetActive(!m_CookUI.activeSelf);
     }
 
     private void SetNeedItem()
@@ -102,12 +77,12 @@ public class CookManager : MonoBehaviour
     private int FindItemIndex(string _name)
     {
         int count = m_ItemList.Count;
-        for (int i = 0; i < count; i++)
+        for (int Index = 0; Index < count; Index++)
         {
-            Item item =  m_ItemList[i].GetComponent<Item>();
-            if(item.m_ItemName.ToString() == _name)
+            Item item =  m_ItemList[Index].GetComponent<Item>();
+            if(item.ReturnName() == _name)
             {
-                return i;
+                return Index;
             }
         }
         return -1;

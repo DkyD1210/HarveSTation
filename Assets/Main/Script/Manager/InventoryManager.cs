@@ -6,22 +6,12 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
-    [SerializeField]
-    private GameObject Inventory;
 
     [SerializeField]
     private Transform TrsInventory;
 
     [SerializeField]
     private List<UIInventorySlot> m_SlotList = new List<UIInventorySlot>();
-
-    [SerializeField]
-    private List<Transform> m_TrsSlotList = new List<Transform>();
-
-    public bool m_InventoryOpen
-    {
-        get => Inventory.activeSelf;
-    }
 
 
     private List<string> m_ItemNameList = new List<string>();
@@ -50,15 +40,6 @@ public class InventoryManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ShowInvetory();
-    }
-
-    private void ShowInvetory()
-    {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Inventory.SetActive(!Inventory.activeSelf);
-        }
     }
 
     private void GetSlotTranform()
@@ -66,7 +47,6 @@ public class InventoryManager : MonoBehaviour
         int count = m_SlotList.Count;
         for (int i = 0; i < count; i++)
         {
-            m_TrsSlotList.Add(m_SlotList[i].transform);
             m_ItemNameList.Add(string.Empty);
             m_ItemCountList.Add(0);
         }

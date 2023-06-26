@@ -30,9 +30,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     private m_eCropName m_CropName;
 
-    private bool IsCook
+    private bool IsMoveStop
     {
-        get => CookManager.Instance.m_IsCook;
+        get => UIManager.Instance.m_IsUIOpen;
     }
 
     private float ray = 1;//raycast 방향용
@@ -47,14 +47,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (InventoryManager.Instance.m_InventoryOpen == true)
-        {
-            return;
-        }
+        UIAct();
 
-        CookAct();
-
-        if (IsCook == true)
+        if (IsMoveStop == true)
         {
             PlayerRigid.constraints = RigidbodyConstraints2D.FreezeAll;
             return;
@@ -148,9 +143,8 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void CookAct()
+    private void UIAct()
     {
-        bool GetKey = Input.GetKeyDown(KeyCode.J);
         if (PlayerDir.y == 1)
         {
             ray = 1f;
@@ -159,13 +153,29 @@ public class Player : MonoBehaviour
         {
             ray = -1f;
         }
-        RaycastHit2D hit = Physics2D.BoxCast(PlayerBox.bounds.center, new Vector2(0.1f, 0.1f), 0f, new Vector3(0f, ray, 0f), 10f, LayerMask.GetMask("CookWare"));
-        if (hit)
+        RaycastHit2D hit = Physics2D.BoxCast(PlayerBox.bounds.center, new Vector2(0.1f, 0.1f), 0f, new Vector3(0f, ray, 0f), 15f, LayerMask.GetMask("InteractionObject"));
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            if (GetKey)
+            if (hit == true)
             {
-                CookManager.Instance.SetCookUI();
+                if (hit.transform.tag == "Stove")
+                {
+                    UIManager.Instance.SetCookUI();
+                }
+                else if (hit.transform.tag == "Shop")
+                {
+                    UIManager.Instance.SetShopUI();
+                }
+            }
+            else
+            {
+                Debug.Log("상호작용 가능 물체 없음");
             }
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            UIManager.Instance.SetInvetoryUI();
+        }
+
     }
 }

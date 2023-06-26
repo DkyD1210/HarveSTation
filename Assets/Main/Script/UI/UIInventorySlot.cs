@@ -17,7 +17,7 @@ public class UIInventorySlot : MonoBehaviour
     private int m_ItemCount;
 
     [SerializeField]
-    private string ItemName;
+    private string m_ItemName;
 
     [SerializeField]
     private Image ItemImage;
@@ -28,21 +28,8 @@ public class UIInventorySlot : MonoBehaviour
         UIItem = transform.Find("Item");
     }
 
-    
-
-    void Update()
-    {
-        SetItemCountText();
-    }
-
     private void SetItemCountText()
     {
-        if (ItemName == null)
-        {
-            return;
-        }
-
-
         if (m_ItemCount == 0)
         {
             ItemCountText.text = string.Empty;
@@ -54,20 +41,22 @@ public class UIInventorySlot : MonoBehaviour
     }
 
 
-    public int SetItem(string _name, Sprite sprite)
+    public int SetItem(string _name, Sprite sprite, int addItemCount = 1)
     {
         ItemImage = UIItem.GetComponent<Image>();
         ItemImage.sprite = sprite;
 
-        ItemName = _name;
-        m_ItemCount++;
+        m_ItemName = _name;
+        m_ItemCount += addItemCount;
+
+        SetItemCountText();
 
         return m_ItemCount;
     }
 
     public string GetItemName()
     {
-        return ItemName;
+        return m_ItemName;
     }
 
     public bool RemoveCount(int count)
@@ -78,13 +67,16 @@ public class UIInventorySlot : MonoBehaviour
             ItemImage.sprite = null;
 
             m_ItemCount = 0;
+            SetItemCountText();
             return true;
         }
         else
         {
             m_ItemCount -= count;
+            SetItemCountText();
             return false;
         }
+        
     }
 
 }
