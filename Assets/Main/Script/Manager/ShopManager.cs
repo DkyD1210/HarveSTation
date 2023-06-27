@@ -14,16 +14,19 @@ public class ShopManager : MonoBehaviour
     private Transform m_TrsShopSlot;
 
     [SerializeField]
+    private Transform m_TrsShopText;
+
+    [SerializeField]
     private List<UIShopSlot> m_SlotList = new List<UIShopSlot>();
 
-    private TextMeshProUGUI m_ItemNameText;
+    [SerializeField]
+    private List<TextMeshProUGUI> m_SlotTextList = new List<TextMeshProUGUI>();
 
-    private TextMeshProUGUI m_ItemDiscountText;
+    private int Index = 0;
 
-    private TextMeshProUGUI m_ItemPriceText;
+    private int MaxIndex = 0;
 
-    private int Index;
-
+    private GameManager gameManager;
 
     private void Awake()
     {
@@ -39,8 +42,10 @@ public class ShopManager : MonoBehaviour
 
     void Start()
     {
-        m_SlotList.AddRange(m_TrsShopSlot.GetComponentsInChildren<UIShopSlot>());
+        gameManager = GameManager.Instance;
+        m_SlotTextList.AddRange(m_TrsShopText.GetComponentsInChildren<TextMeshProUGUI>());
         m_BeforeDay = TimeManager.Instance.CheckDay();
+        ShopUpdate();
     }
 
     void Update()
@@ -52,38 +57,65 @@ public class ShopManager : MonoBehaviour
     private void CheckUpdate()
     {
         int day = TimeManager.Instance.CheckDay();
-        if(m_BeforeDay != day)
+        if (m_BeforeDay != day)
         {
             m_BeforeDay = day;
             ShopUpdate();
         }
     }
+
     private void ShopUpdate()
     {
+        m_SlotList.Clear();
+        m_SlotList.AddRange(m_TrsShopSlot.GetComponentsInChildren<UIShopSlot>());
+        MaxIndex = (m_SlotList.Count - 1);
 
+        int count = m_SlotList.Count;
+        for (int i = 0; i < count; i++)
+        {            
+            int rand = Random.Range(0, gameManager.GetItemCount());
+            GameObject obj = gameManager.m_ItemList[rand];
+            SpriteRenderer spr = obj.GetComponent<SpriteRenderer>();
+            Item item = obj.GetComponent<Item>();
+
+            m_SlotList[i].SetItemSlot(spr.sprite, item.ReturnName(), 0, 0);
+
+        }
+        ShowSlotText(m_SlotList[0]);
     }
 
     private void SelectSlot()
     {
-        if(Input.GetKeyUp(KeyCode.LeftArrow))
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            Index++;
-            UIShopSlot slot = m_SlotList[Index];
-            ShowSlotText(slot);
+            if (Index > 0)
+            {
+                Index--;
+            }
+            ShowSlotText(m_SlotList[Index]);
         }
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            Index--;
-            UIShopSlot slot = m_SlotList[Index];
-            ShowSlotText(slot);
+            if (Index < MaxIndex)
+            {
+                Index++;
+            }
+            ShowSlotText(m_SlotList[Index]);
         }
-
     }
 
     private void ShowSlotText(UIShopSlot slot)
     {
-        m_ItemNameText.text = "1";
-        m_ItemDiscountText.text = "2";
-        m_ItemPriceText.text = "3";
+        (string nametext, int counttext, int prisetext, bool issell) = slot.GetItemSlot();
+        m_SlotTextList[0].text = nametext;
+        m_SlotTextList[1].text = $"{counttext}a";
+        if (issell == true)
+        {
+            m_SlotTextList[2].text = $"b : {prisetext}";
+        }
+        else
+        {
+            m_SlotTextList[2].text = $"c : {prisetext}";
+        }
     }
 }

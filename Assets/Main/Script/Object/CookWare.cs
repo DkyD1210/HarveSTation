@@ -4,16 +4,10 @@ using UnityEngine;
 
 public class CookWare : MonoBehaviour
 {
-    public enum m_eCookWare
-    {
-        Range = 1000,
-        Oven = 2000,
-    }
+    [SerializeField] Transform trsPlayer;
+    [SerializeField, Range(0.1f, 100.0f)] float fDistance;
 
-    public m_eCookWare m_WareType;
-
-    [SerializeField]
-    private GameObject m_CookUI;
+    public bool IsSelected;
 
     void Start()
     {
@@ -23,8 +17,19 @@ public class CookWare : MonoBehaviour
     
     void Update()
     {
-        
+        if (IsSelected)
+        {
+            Debug.Log("a");
+            //기준보다 가까울때
+        }
+        else
+        {
+            //기준보다 멀때 
+        }
     }
 
-
+    private bool isClosedPlayer()
+    {
+        return Vector3.Distance(transform.position, trsPlayer.position) < fDistance;
+    }
 }

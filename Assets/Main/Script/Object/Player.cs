@@ -14,7 +14,13 @@ public class Player : MonoBehaviour
     //플레이어 이동벡터값
     private Vector3 PlayerDir;
 
+    //매니저 인스턴스 시작
+    private GameManager gameManager;
 
+    private UIManager uIManager;
+
+    private InventoryManager inventoryManager;
+    //매니저 인스턴스 끝
 
     [Header("이동")]
 
@@ -39,6 +45,9 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        gameManager = GameManager.Instance;
+        uIManager = UIManager.Instance;
+        inventoryManager = InventoryManager.Instance;
         PlayerBox = GetComponent<BoxCollider2D>();
         PlayerRigid = GetComponent<Rigidbody2D>();
     }
@@ -90,7 +99,7 @@ public class Player : MonoBehaviour
 
                 if (_crop.m_CanHarvest == true)
                 {
-                    int SlotNum = InventoryManager.Instance.CheckEmptyInventory(_item.ReturnName());
+                    int SlotNum = inventoryManager.CheckEmptyInventory(_item.ReturnName());
                     if (SlotNum == -1)
                     {
                         Debug.Log("인벤토리 공간 없음");
@@ -126,7 +135,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            GameManager.Instance.PlantCrop(transform.position, m_CropName);
+            gameManager.PlantCrop(transform.position, m_CropName);
         }
     }
 
@@ -160,11 +169,11 @@ public class Player : MonoBehaviour
             {
                 if (hit.transform.tag == "Stove")
                 {
-                    UIManager.Instance.SetCookUI();
+                    uIManager.SetCookUI();
                 }
                 else if (hit.transform.tag == "Shop")
                 {
-                    UIManager.Instance.SetShopUI();
+                    uIManager.SetShopUI();
                 }
             }
             else
@@ -174,7 +183,7 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            UIManager.Instance.SetInvetoryUI();
+            uIManager.SetInvetoryUI();
         }
 
     }

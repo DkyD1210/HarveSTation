@@ -13,6 +13,8 @@ public class CookManager : MonoBehaviour
 
     private List<GameObject> m_ItemList = new List<GameObject>();
 
+    private InventoryManager inventoryManager;
+
 
     private void Awake()
     {
@@ -30,6 +32,7 @@ public class CookManager : MonoBehaviour
     {
         m_Button.onClick.AddListener(SetNeedItem);
         m_ItemList = GameManager.Instance.m_ItemList;
+        inventoryManager = InventoryManager.Instance;
     }
 
     private void SetNeedItem()
@@ -45,21 +48,21 @@ public class CookManager : MonoBehaviour
     /// <param name="_returnItemName">변환 아이템 이름</param>
     private void UseItem(string _name, int _needCount, string _returnItemName)
     {
-        int CropslotNum = InventoryManager.Instance.CheckEmptyInventory(_name);
-        int CropCount = InventoryManager.Instance.FindItemCount(_name);
+        int CropslotNum = inventoryManager.CheckEmptyInventory(_name);
+        int CropCount = inventoryManager.FindItemCount(_name);
         
 
         if ((CropCount - _needCount) >= 0)
         {
             
-            int ItemSlotNum = InventoryManager.Instance.CheckEmptyInventory(_returnItemName);
+            int ItemSlotNum = inventoryManager.CheckEmptyInventory(_returnItemName);
             if (ItemSlotNum == -1)
             {
                 Debug.Log("인벤토리 공간 부족");
             }
             else
             {
-                InventoryManager.Instance.RemoveItem(CropslotNum, _needCount);
+                inventoryManager.RemoveItem(CropslotNum, _needCount);
                 GameObject returnItemobj = m_ItemList[FindItemIndex(_returnItemName)];
                 Item returnItem = returnItemobj.GetComponent<Item>();
 

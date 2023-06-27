@@ -65,12 +65,14 @@ public class Crop : MonoBehaviour
     [SerializeField]
     private m_eCropName m_CropName;
 
+    private TimeManager timeManager;
     void Start()
     {
         m_spr = GetComponent<SpriteRenderer>();
         SetGrowTime();
 
-        beforeTime = TimeManager.Instance.CheckTime();
+        timeManager = TimeManager.Instance;
+        beforeTime = timeManager.CheckTime();
     }
 
 
@@ -90,7 +92,7 @@ public class Crop : MonoBehaviour
         if (TimeManager.Instance.CheckTime() != beforeTime)
         {
             m_Time++;
-            beforeTime = TimeManager.Instance.CheckTime();
+            beforeTime = timeManager.CheckTime();
         }
         if (m_Time >= GrowTime)
         {
@@ -112,8 +114,8 @@ public class Crop : MonoBehaviour
         }
         else
         {
-            m_eWeather EWeather = TimeManager.Instance.m_WeaTher;
-            m_eGameDay EDay = TimeManager.Instance.m_GameDay;
+            m_eWeather EWeather = timeManager.m_WeaTher;
+            m_eGameDay EDay = timeManager.m_GameDay;
             if (m_TimeType.ToString() == EDay.ToString() && m_WeatherType == m_eWeatherType.Anythnig) 
             {
                 m_CanHarvest = true;

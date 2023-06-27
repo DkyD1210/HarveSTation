@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameObject m_Inventory;//인벤토리
 
+    private TimeManager timeManager;
+
     public bool m_IsUIOpen
     {
         get
@@ -54,7 +56,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-
+        timeManager = TimeManager.Instance;
     }
 
 
@@ -71,14 +73,14 @@ public class UIManager : MonoBehaviour
         string timetext = string.Format("{0:D2}", hour) + ":" + string.Format("{0:D2}", minute);
         m_TimeText.text = timetext;
 
-        m_eGameDay TimeType = TimeManager.Instance.m_GameDay;
+        m_eGameDay TimeType = timeManager.m_GameDay;
         m_TimeTypeText.text = TimeType.ToString();
 
     }
 
     private void PrintWeather()
     {
-        m_eWeather weather = TimeManager.Instance.m_WeaTher;
+        m_eWeather weather = timeManager.m_WeaTher;
 
         string weathertext = "Weather : " + weather;
         m_WeatherText.text = weathertext;

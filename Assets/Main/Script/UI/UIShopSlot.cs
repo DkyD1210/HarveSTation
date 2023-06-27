@@ -5,37 +5,33 @@ using UnityEngine.UI;
 
 public class UIShopSlot : MonoBehaviour
 {
-    [SerializeField]
     private string ItemName;
 
-    [SerializeField]
+    private Transform TrsImage;
+
+    private Image ItemImage;
+
     private int NeedItemCount;
 
-    [SerializeField]
-    private Image ItemImage;
+    private int Prise;
 
     [SerializeField]
     private bool m_IsSellSlot;
 
-
-    void Start()
+    public void SetItemSlot(Sprite image, string name, int discount, int prise)
     {
-        
+        TrsImage = transform.Find("Image");
+        ItemImage = TrsImage.GetComponent<Image>();
+        ItemImage.sprite = image;
+
+        ItemName = name;
+        NeedItemCount = discount;
+        Prise = prise;
     }
 
-    void Update()
+    public (string name, int discount, int prise, bool slot) GetItemSlot()
     {
-        
-    }
-
-    private void GetItemSlot()
-    {
-
-    }
-
-    private void SetItemSlot()
-    {
-
+        return (ItemName, NeedItemCount, Prise, m_IsSellSlot);
     }
 
 }

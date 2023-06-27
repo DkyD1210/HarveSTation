@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [Header("아이템 리스트")]
-    public List<GameObject> m_ItemList = new List<GameObject>();
+    public List<GameObject> m_ItemList;
 
     [SerializeField]
     private Transform m_TrsCropLayer;
@@ -28,19 +28,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-
-    void Start()
+    public int GetItemCount()
     {
-        
+        return m_ItemList.Count;
     }
-
-
-    void Update()
-    {
-
-    }
-
     public void PlantCrop(Vector3 _playertrs, m_eCropName _name)
     {
         Instantiate(m_ItemList[(int)_name], _playertrs, Quaternion.identity, m_TrsCropLayer);
