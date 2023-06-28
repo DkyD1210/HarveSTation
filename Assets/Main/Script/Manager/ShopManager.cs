@@ -22,11 +22,15 @@ public class ShopManager : MonoBehaviour
     [SerializeField]
     private List<TextMeshProUGUI> m_SlotTextList = new List<TextMeshProUGUI>();
 
-    private int Index = 0;
+    [SerializeField]
+    private int SlotIndex = 0;
 
+    [SerializeField]
     private int MaxIndex = 0;
 
     private GameManager gameManager;
+
+    private UIManager uiManager;
 
     private void Awake()
     {
@@ -43,6 +47,7 @@ public class ShopManager : MonoBehaviour
     void Start()
     {
         gameManager = GameManager.Instance;
+        uiManager = UIManager.Instance;
         m_SlotTextList.AddRange(m_TrsShopText.GetComponentsInChildren<TextMeshProUGUI>());
         m_BeforeDay = TimeManager.Instance.CheckDay();
         ShopUpdate();
@@ -68,7 +73,7 @@ public class ShopManager : MonoBehaviour
     {
         m_SlotList.Clear();
         m_SlotList.AddRange(m_TrsShopSlot.GetComponentsInChildren<UIShopSlot>());
-        MaxIndex = (m_SlotList.Count - 1);
+        
 
         int count = m_SlotList.Count;
         for (int i = 0; i < count; i++)
@@ -79,28 +84,33 @@ public class ShopManager : MonoBehaviour
             Item item = obj.GetComponent<Item>();
 
             m_SlotList[i].SetItemSlot(spr.sprite, item.ReturnName(), 0, 0);
-
+            MaxIndex++;
         }
         ShowSlotText(m_SlotList[0]);
     }
 
     private void SelectSlot()
     {
+        if (uiManager.m_IsUIOpen == false)
+        {
+            SlotIndex = 0;
+            return;
+        }
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            if (Index > 0)
+            if (SlotIndex > 0)
             {
-                Index--;
+                SlotIndex--;
             }
-            ShowSlotText(m_SlotList[Index]);
+            ShowSlotText(m_SlotList[SlotIndex]);
         }
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            if (Index < MaxIndex)
+            if (SlotIndex +1 < MaxIndex)
             {
-                Index++;
+                SlotIndex++;
             }
-            ShowSlotText(m_SlotList[Index]);
+            ShowSlotText(m_SlotList[SlotIndex]);
         }
     }
 

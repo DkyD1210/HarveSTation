@@ -1,23 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager Instance;
 
+    private UIManager uIManager;
 
     [SerializeField]
-    private Transform TrsInventory;
+    private Transform TrsSlot;
 
     [SerializeField]
     private List<UIInventorySlot> m_SlotList = new List<UIInventorySlot>();
 
+    [SerializeField]
+    private Transform TrsText;
+
+    [SerializeField]
+    private List<TextMeshProUGUI> m_TextList = new List<TextMeshProUGUI>();
 
     private List<string> m_ItemNameList = new List<string>();
 
     private List<int> m_ItemCountList = new List<int>();
 
+    [SerializeField]
+    private int SlotIndex;
+    [SerializeField]
+    private int MaxIndex = 0;
 
     private void Awake()
     {
@@ -32,14 +42,16 @@ public class InventoryManager : MonoBehaviour
     }
     void Start()
     {
-        m_SlotList.AddRange(TrsInventory.GetComponentsInChildren<UIInventorySlot>());
+        uIManager = UIManager.Instance;
+        m_SlotList.AddRange(TrsSlot.GetComponentsInChildren<UIInventorySlot>());
+        m_TextList.AddRange(TrsText.GetComponentsInChildren<TextMeshProUGUI>());
         GetSlotTranform();
 
     }
 
-    // Update is called once per frame
     void Update()
     {
+        SelectSlot();
     }
 
     private void GetSlotTranform()
@@ -49,7 +61,9 @@ public class InventoryManager : MonoBehaviour
         {
             m_ItemNameList.Add(string.Empty);
             m_ItemCountList.Add(0);
+            MaxIndex++;
         }
+        SetItemText(0);
     }
 
 
@@ -101,6 +115,38 @@ public class InventoryManager : MonoBehaviour
         {
             m_ItemNameList.RemoveAt(_slotNum);
             m_ItemCountList.RemoveAt(_slotNum);
+        }
+    }
+
+    private void SetItemText(int index)
+    {
+        m_TextList[0].text = m_ItemNameList[index].ToString();
+        m_TextList[1].text = m_ItemCountList[index].ToString();
+    }
+
+    private void SelectSlot()
+    {
+        if(uIManager.m_IsUIOpen == false)
+        {
+            SlotIndex = 0;
+            return;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            if (SlotIndex > 0)
+            {
+                SlotIndex--;
+            }
+            SetItemText(SlotIndex);
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            if (SlotIndex +1 < MaxIndex)
+            {
+                SlotIndex++;
+            }
+            SetItemText(SlotIndex);
         }
     }
 }

@@ -9,6 +9,8 @@ public class UIManager : MonoBehaviour
 
     public static UIManager Instance;
 
+    private TimeManager timeManager;
+
     [SerializeField]
     private TextMeshProUGUI m_DayText; //날짜 텍스트
 
@@ -21,6 +23,8 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_WeatherText; //날씨 텍스트
 
+    [SerializeField]
+    private TextMeshProUGUI m_MoneyText; //돈 텍스트;
 
     [SerializeField]
     private GameObject m_CookUI;//요리창
@@ -29,15 +33,15 @@ public class UIManager : MonoBehaviour
     private GameObject m_ShopUI;//상점창
 
     [SerializeField]
-    private GameObject m_Inventory;//인벤토리
+    private GameObject m_InventoryUI;//인벤토리
 
-    private TimeManager timeManager;
+
 
     public bool m_IsUIOpen
     {
         get
         {
-            return m_CookUI.activeSelf || m_ShopUI.activeSelf || m_Inventory.activeSelf;
+            return m_CookUI.activeSelf || m_ShopUI.activeSelf || m_InventoryUI.activeSelf;
         }
     }
 
@@ -65,6 +69,14 @@ public class UIManager : MonoBehaviour
         PrintWeather();
     }
 
+    private void PrintWeather()
+    {
+        m_eWeather weather = timeManager.m_WeaTher;
+
+        string weathertext = "Weather : " + weather;
+        m_WeatherText.text = weathertext;
+    }
+
     public void SetTimeText(int minute, int hour, int day)
     {
 
@@ -78,13 +90,6 @@ public class UIManager : MonoBehaviour
 
     }
 
-    private void PrintWeather()
-    {
-        m_eWeather weather = timeManager.m_WeaTher;
-
-        string weathertext = "Weather : " + weather;
-        m_WeatherText.text = weathertext;
-    }
 
 
     public void SetCookUI()
@@ -99,6 +104,11 @@ public class UIManager : MonoBehaviour
 
     public void SetInvetoryUI()
     {
-        m_Inventory.SetActive(!m_Inventory.activeSelf);
+        m_InventoryUI.SetActive(!m_InventoryUI.activeSelf);
+    }
+
+    public void SetMoneyText(int money)
+    {
+        m_MoneyText.text = $"{money}$";
     }
 }

@@ -7,13 +7,15 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance;
 
+    private UIManager uiManager;
+
     [Header("아이템 리스트")]
     public List<GameObject> m_ItemList;
 
     [SerializeField]
     private Transform m_TrsCropLayer;
 
-    [SerializeField]
+    [SerializeField, Range(0, 999999999)]
     private int Money;
 
     private void Awake()
@@ -28,6 +30,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        uiManager = UIManager.Instance;
+    }
+
+    private void Update()
+    {
+        uiManager.SetMoneyText(Money);
+    }
+
     public int GetItemCount()
     {
         return m_ItemList.Count;
@@ -36,4 +48,5 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(m_ItemList[(int)_name], _playertrs, Quaternion.identity, m_TrsCropLayer);
     }
+
 }

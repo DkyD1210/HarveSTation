@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7860353172406334482}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 359227590, guid: 932d73545138c8248b53528147afbecd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -90,7 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5b3a1c90e2a74428e87fe29f113b1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IsSellSlot: 0
+  m_IsSellSlot: 1
 --- !u!1001 &5285669833373709353
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -98,6 +98,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7860353172406334483}
     m_Modifications:
+    - target: {fileID: 2616570653363311709, guid: bb755062b8aa921468c9ecf4d57b80b1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ef28c5762ffd0a74788fbcc896eede4a, type: 3}
     - target: {fileID: 2616570653363311710, guid: bb755062b8aa921468c9ecf4d57b80b1, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

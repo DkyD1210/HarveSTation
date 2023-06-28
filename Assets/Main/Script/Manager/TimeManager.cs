@@ -8,6 +8,8 @@ public class TimeManager : MonoBehaviour
 
     public static TimeManager Instance;
 
+    private UIManager uiManager;
+
     [Header("시간과 날짜")]
     //초
     private float m_MainSecond;
@@ -67,13 +69,13 @@ public class TimeManager : MonoBehaviour
 
     void Start()
     {
-
+        uiManager = UIManager.Instance;
     }
 
     void Update()
     {
         SetTime();
-        UIManager.Instance.SetTimeText(m_MainMinute, m_MainHour, m_MainDay);
+        uiManager.SetTimeText(m_MainMinute, m_MainHour, m_MainDay);
     }
 
     private void SetTime()
