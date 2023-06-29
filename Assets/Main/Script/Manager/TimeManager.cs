@@ -39,7 +39,7 @@ public class TimeManager : MonoBehaviour
     {
         get
         {
-            if (UIManager.Instance.m_IsUIOpen == true)
+            if (uiManager.m_IsUIOpen == true)
             {
                 return true;
             }

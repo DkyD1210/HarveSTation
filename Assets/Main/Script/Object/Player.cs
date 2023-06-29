@@ -107,9 +107,9 @@ public class Player : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("수확 성공");
                         _item.GetItem(SlotNum);
                         Destroy(obj);
+                        Debug.Log("수확 성공");
                     }
                 }
                 else

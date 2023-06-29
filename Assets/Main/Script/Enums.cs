@@ -19,9 +19,9 @@ public enum m_eWeather
 
 public enum m_eCropName
 {
-    Potato,
-    Tomato,
-    Wheat,
+    Potato = 1,
+    Tomato = 2,
+    Wheat = 3,
 }
 
 public enum m_eItemName

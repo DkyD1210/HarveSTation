@@ -7,13 +7,18 @@ public class CookManager : MonoBehaviour
 {
     public static CookManager Instance;
 
+    private GameManager gameManager;
+
+    private InventoryManager inventoryManager;
+
+    [Header("아이템 조합법")]
+    public List<Lecipe> m_Lecipes = new List<Lecipe>();
+
+    [Space]
 
     [SerializeField]
     private Button m_Button;
 
-    private List<GameObject> m_ItemList = new List<GameObject>();
-
-    private InventoryManager inventoryManager;
 
 
     private void Awake()
@@ -30,64 +35,53 @@ public class CookManager : MonoBehaviour
 
     void Start()
     {
-        m_Button.onClick.AddListener(SetNeedItem);
-        m_ItemList = GameManager.Instance.m_ItemList;
+        gameManager = GameManager.Instance;
         inventoryManager = InventoryManager.Instance;
+        m_Button.onClick.AddListener(SetNeedItem);
     }
 
     private void SetNeedItem()
     {
-        UseItem(m_eItemName.Potato.ToString(), 8, m_eItemName.FridePotato.ToString());
+        CookItem(m_Lecipes[0]);
     }
 
-    /// <summary>
-    /// 재료변환
-    /// </summary>
-    /// <param name="_name">필요한 재료 아이템 이름</param>
-    /// <param name="_needCount">필요한 재료 아이템 갯수</param>
-    /// <param name="_returnItemName">변환 아이템 이름</param>
-    private void UseItem(string _name, int _needCount, string _returnItemName)
-    {
-        int CropslotNum = inventoryManager.CheckEmptyInventory(_name);
-        int CropCount = inventoryManager.FindItemCount(_name);
-        
 
-        if ((CropCount - _needCount) >= 0)
+    private void CookItem(Lecipe _lecipe)
+    {
+        foreach (var _Materialitem in _lecipe.Materials)
         {
-            
-            int ItemSlotNum = inventoryManager.CheckEmptyInventory(_returnItemName);
-            if (ItemSlotNum == -1)
+            string _MaterialName = _Materialitem.Name.ToString();
+            int _Materialcount = _Materialitem.Count;
+
+            int MaterialSlotNum = inventoryManager.CheckEmptyInventory(_MaterialName);
+            int MaterialCount = inventoryManager.FindItemCount(MaterialSlotNum);
+            if (MaterialCount - _Materialcount >= 0)
             {
-                Debug.Log("인벤토리 공간 부족");
+                foreach (var _ResualtItem in _lecipe.Resualts)
+                {
+                    string _ResualtItemName = _ResualtItem.Name.ToString();
+                    int _ResualtItemCount = _ResualtItem.Count;
+
+                    int ItemSlotNum = inventoryManager.CheckEmptyInventory(_ResualtItemName);
+                    if(ItemSlotNum == -1)
+                    {
+                        Debug.Log("아이템 공간 부족");
+                    }
+                    else
+                    {
+                        Item ResualtItem = gameManager.FindItemIndex(_ResualtItemName);
+                        ResualtItem.GetItem(ItemSlotNum);
+
+                        inventoryManager.RemoveItem(MaterialSlotNum, _Materialcount);
+                    }
+                }
             }
             else
             {
-                inventoryManager.RemoveItem(CropslotNum, _needCount);
-                GameObject returnItemobj = m_ItemList[FindItemIndex(_returnItemName)];
-                Item returnItem = returnItemobj.GetComponent<Item>();
-
-                returnItem.GetItem(ItemSlotNum);
-                
-                Debug.Log("조리시작");
+                Debug.Log("재료부족");
             }
-        }
-        else
-        {
-            Debug.Log("재료부족");
         }
     }
 
-    private int FindItemIndex(string _name)
-    {
-        int count = m_ItemList.Count;
-        for (int Index = 0; Index < count; Index++)
-        {
-            Item item =  m_ItemList[Index].GetComponent<Item>();
-            if(item.ReturnName() == _name)
-            {
-                return Index;
-            }
-        }
-        return -1;
-    }
+
 }

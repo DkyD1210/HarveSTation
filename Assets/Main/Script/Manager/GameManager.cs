@@ -12,11 +12,15 @@ public class GameManager : MonoBehaviour
     [Header("아이템 리스트")]
     public List<GameObject> m_ItemList;
 
+
     [SerializeField]
     private Transform m_TrsCropLayer;
 
-    [SerializeField, Range(0, 999999999)]
-    private int Money;
+    [Range(0, 999999999)]
+    public int Money;
+
+    [SerializeField]
+
 
     private void Awake()
     {
@@ -48,5 +52,20 @@ public class GameManager : MonoBehaviour
     {
         Instantiate(m_ItemList[(int)_name], _playertrs, Quaternion.identity, m_TrsCropLayer);
     }
+
+    public Item FindItemIndex(string _name)
+    {
+        int count = m_ItemList.Count;
+        for (int _index = 0; _index < count; _index++)
+        {
+            Item item = m_ItemList[_index].GetComponent<Item>();
+            if (item.ReturnName() == _name)
+            {
+                return item;
+            }
+        }
+        return m_ItemList[0].GetComponent<Item>();
+    }
+
 
 }

@@ -14,18 +14,23 @@ public class UIInventorySlot : MonoBehaviour
     private Transform UIItem;
 
     [SerializeField]
-    private int m_ItemCount;
+    private string m_ItemName = string.Empty;
 
     [SerializeField]
-    private string m_ItemName;
+    private int m_ItemCount = 0;
 
     [SerializeField]
     private Image ItemImage;
+
+    [SerializeField]
+    private Sprite DefaltImage;
 
     void Start()
     {
         ItemCountText = GetComponentInChildren<TextMeshProUGUI>();
         UIItem = transform.Find("Item");
+        SetImage();
+        SetItemCountText();
     }
 
     private void SetItemCountText()
@@ -40,11 +45,35 @@ public class UIInventorySlot : MonoBehaviour
         }
     }
 
-
-    public int SetItem(string _name, Sprite sprite, int addItemCount = 1)
+    /// <summary>
+    /// 이미지가 있을때 스프라이트 적용
+    /// </summary>
+    /// <param name="spr"></param>
+    private void SetImage(Sprite spr)
     {
-        ItemImage = UIItem.GetComponent<Image>();
-        ItemImage.sprite = sprite;
+        if (ItemImage == null)
+        {
+            ItemImage = UIItem.GetComponent<Image>();
+        }
+        ItemImage.sprite = spr;
+
+    }
+
+    /// <summary>
+    /// 이미지를 없앨때(= 기본이미지)
+    /// </summary>
+    private void SetImage()
+    {
+        if (ItemImage == null)
+        {
+            ItemImage = UIItem.GetComponent<Image>();
+        }
+        ItemImage.sprite = DefaltImage;
+    }
+
+    public int SetItem(string _name, Sprite sprite, int addItemCount)
+    {
+        SetImage(sprite);
 
         m_ItemName = _name;
         m_ItemCount += addItemCount;
@@ -59,24 +88,23 @@ public class UIInventorySlot : MonoBehaviour
         return m_ItemName;
     }
 
-    public bool RemoveCount(int count)
+    public int GetItemCount()
     {
-        if ((m_ItemCount - count) <= 0)
+        return m_ItemCount;
+    }
+
+    public void RemoveCount(int count)
+    {
+        m_ItemCount -= count;
+        if (m_ItemCount <= 0)
         {
-            ItemImage = UIItem.GetComponent<Image>();
-            ItemImage.sprite = null;
+            SetImage();
 
             m_ItemCount = 0;
-            SetItemCountText();
-            return true;
         }
-        else
-        {
-            m_ItemCount -= count;
-            SetItemCountText();
-            return false;
-        }
-        
+        SetItemCountText();
+
+
     }
 
 }

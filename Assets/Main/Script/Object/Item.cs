@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+
     private SpriteRenderer m_spr;
 
     [SerializeField]
     private m_eItemName m_ItemName;
+
 
     private void Start()
     {
@@ -17,7 +19,7 @@ public class Item : MonoBehaviour
     public void GetItem(int _slotnum)
     {
         m_spr = GetComponent<SpriteRenderer>();
-        InventoryManager.Instance.GetItem(_slotnum, m_ItemName.ToString(), m_spr.sprite);
+        InventoryManager.Instance.GetItem(_slotnum, m_spr.sprite, m_ItemName.ToString());
     }
 
     public string ReturnName()

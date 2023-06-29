@@ -29,9 +29,14 @@ public class UIShopSlot : MonoBehaviour
         Prise = prise;
     }
 
-    public (string name, int discount, int prise, bool slot) GetItemSlot()
+    public (string name, int discount, int prise, bool isSell) GetItemSlot()
     {
         return (ItemName, NeedItemCount, Prise, m_IsSellSlot);
+    }
+
+    public Sprite GetitmeSprite()
+    {
+        return ItemImage.sprite;
     }
 
 }

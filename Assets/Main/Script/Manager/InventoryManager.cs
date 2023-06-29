@@ -8,6 +8,8 @@ public class InventoryManager : MonoBehaviour
 
     private UIManager uIManager;
 
+    private GameManager gameManager;
+
     [SerializeField]
     private Transform TrsSlot;
 
@@ -20,12 +22,9 @@ public class InventoryManager : MonoBehaviour
     [SerializeField]
     private List<TextMeshProUGUI> m_TextList = new List<TextMeshProUGUI>();
 
-    private List<string> m_ItemNameList = new List<string>();
-
-    private List<int> m_ItemCountList = new List<int>();
 
     [SerializeField]
-    private int SlotIndex;
+    private int m_SlotIndex;
     [SerializeField]
     private int MaxIndex = 0;
 
@@ -34,6 +33,7 @@ public class InventoryManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            InitManager();
         }
         else
         {
@@ -43,10 +43,7 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         uIManager = UIManager.Instance;
-        m_SlotList.AddRange(TrsSlot.GetComponentsInChildren<UIInventorySlot>());
-        m_TextList.AddRange(TrsText.GetComponentsInChildren<TextMeshProUGUI>());
-        GetSlotTranform();
-
+        gameManager = GameManager.Instance;
     }
 
     void Update()
@@ -54,16 +51,53 @@ public class InventoryManager : MonoBehaviour
         SelectSlot();
     }
 
-    private void GetSlotTranform()
+    private void InitManager()
     {
-        int count = m_SlotList.Count;
-        for (int i = 0; i < count; i++)
-        {
-            m_ItemNameList.Add(string.Empty);
-            m_ItemCountList.Add(0);
-            MaxIndex++;
-        }
+        m_SlotList.AddRange(TrsSlot.GetComponentsInChildren<UIInventorySlot>());
+        m_TextList.AddRange(TrsText.GetComponentsInChildren<TextMeshProUGUI>());
+        MaxIndex = (m_SlotList.Count - 1);
         SetItemText(0);
+    }
+
+    private void SelectSlot()
+    {
+        if (uIManager.m_IsUIOpen == false)
+        {
+            m_SlotIndex = 0;
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (m_SlotIndex > 0)
+            {
+                m_SlotIndex--;
+            }
+            SetItemText(m_SlotIndex);
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (m_SlotIndex + 1 < MaxIndex)
+            {
+                m_SlotIndex++;
+            }
+            SetItemText(m_SlotIndex);
+        }
+    }
+
+
+    private void SetItemText(int index)
+    {
+        UIInventorySlot item = m_SlotList[index];
+        m_TextList[0].text = item.GetItemName();
+        if (item.GetItemCount() == 0)
+        {
+            m_TextList[1].text = "None";
+        }
+        else
+        {
+            m_TextList[1].text = item.GetItemCount().ToString();
+        }
     }
 
 
@@ -88,65 +122,50 @@ public class InventoryManager : MonoBehaviour
         return -1;
     }
 
-    public void GetItem(int SlotNum, string _name, Sprite _spr)
+    public int FindItemSlotIndex(string _name)
     {
-        m_ItemNameList[SlotNum] = _name;
-        m_ItemCountList[SlotNum] = m_SlotList[SlotNum].SetItem(_name, _spr);
-    }
-
-    public int FindItemCount(string _name)
-    {
-        int count = m_ItemNameList.Count;
+        int count = m_SlotList.Count;
         for (int i = 0; i < count; i++)
         {
-            if (m_ItemNameList[i] == _name)
+            if (m_SlotList[i].GetItemName() == _name)
             {
-                return m_ItemCountList[i];
+                return i;
             }
         }
         return 0;
     }
 
+    public int FindItemCount(string _name)
+    {
+        int count = m_SlotList.Count;
+        for (int i = 0; i < count; i++)
+        {
+            if (m_SlotList[i].GetItemName() == _name)
+            {
+                int _count = m_SlotList[i].GetItemCount();
+                return _count;
+            }
+        }
+        return 0;
+    }
+
+    public int FindItemCount(int slotNum)
+    {
+        if (slotNum == -1)
+        {
+            return 0;
+        }
+        return m_SlotList[slotNum].GetItemCount();
+    }
+
+    public void GetItem(int slotNum, Sprite spr, string name, int count = 1)
+    {
+        m_SlotList[slotNum].SetItem(name, spr, count);
+    }
+
     public void RemoveItem(int _slotNum, int decreaseCount)
     {
-        m_ItemCountList[_slotNum] -= decreaseCount;
-        bool IsRemove = m_SlotList[_slotNum].RemoveCount(decreaseCount);
-        if (IsRemove)
-        {
-            m_ItemNameList.RemoveAt(_slotNum);
-            m_ItemCountList.RemoveAt(_slotNum);
-        }
+        m_SlotList[_slotNum].RemoveCount(decreaseCount);
     }
 
-    private void SetItemText(int index)
-    {
-        m_TextList[0].text = m_ItemNameList[index].ToString();
-        m_TextList[1].text = m_ItemCountList[index].ToString();
-    }
-
-    private void SelectSlot()
-    {
-        if(uIManager.m_IsUIOpen == false)
-        {
-            SlotIndex = 0;
-            return;
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            if (SlotIndex > 0)
-            {
-                SlotIndex--;
-            }
-            SetItemText(SlotIndex);
-        }
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            if (SlotIndex +1 < MaxIndex)
-            {
-                SlotIndex++;
-            }
-            SetItemText(SlotIndex);
-        }
-    }
 }
