@@ -7,6 +7,8 @@ using UnityEngine;
 [Serializable]
 public class Lecipe
 {
+    public int Id;
+
     public List<Material> Materials;
 
     public List<Resualt> Resualts;
