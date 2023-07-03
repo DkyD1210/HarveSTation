@@ -93,7 +93,10 @@ public class ShopManager : MonoBehaviour
             SpriteRenderer spr = obj.GetComponent<SpriteRenderer>();
             Item item = obj.GetComponent<Item>();
 
-            m_SlotList[i].SetItemSlot(spr.sprite, item.ReturnName(), 1, 1);
+            int disCount = Random.Range(1, 6);
+            int prise = Random.Range(20, 101);
+
+            m_SlotList[i].SetItemSlot(spr.sprite, item.ReturnName(), disCount, prise);
             MaxIndex++;
         }
         SetSlotText(m_SlotList[0]);
@@ -138,14 +141,14 @@ public class ShopManager : MonoBehaviour
     {
         (string nametext, int counttext, int prisetext, bool issell) = slot.GetItemSlot();
         m_SlotTextList[0].text = nametext;
-        m_SlotTextList[1].text = $"{counttext}a";
+        m_SlotTextList[1].text = $"{counttext}a"; // $"{counttext}개"
         if (issell == true)
         {
-            m_SlotTextList[2].text = $"b : {prisetext}";
+            m_SlotTextList[2].text = $"b : {prisetext}"; // $"판매가 : {prisetext}"
         }
         else
         {
-            m_SlotTextList[2].text = $"c : {prisetext}";
+            m_SlotTextList[2].text = $"c : {prisetext}"; // $"구매가 : {prisetext}"
         }
     }
 

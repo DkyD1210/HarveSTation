@@ -14,19 +14,29 @@ public class UICookSlot : MonoBehaviour
     private string ItemName;
 
     [SerializeField]
+    private Transform TrsImage;
+
+    [SerializeField]
     private Image ItemImage;
 
     [SerializeField]
     private TextMeshProUGUI ItemText;
+
+
+    private void Start()
+    {
+        TrsImage = transform.Find("ItemImage");
+    }
 
     private void SetText()
     {
         ItemText.text = ItemName;
     }
 
-    private void SetImage()
+    private void SetImage(Sprite spr)
     {
-        Sprite spr = GameManager.Instance.FindItemIndex(ItemName).GetComponent<Sprite>();
+        ItemImage = TrsImage.GetComponent<Image>();
+
         ItemImage.sprite = spr;
     }
 
@@ -35,8 +45,11 @@ public class UICookSlot : MonoBehaviour
         Id = id;
         ItemName = itemName;
 
+        Item item = GameManager.Instance.FindItemIndex(ItemName);
+        Sprite spr = item.ReturnSprite();
         ItemText = GetComponentInChildren<TextMeshProUGUI>();
         SetText();
-        SetImage();
+
+        SetImage(spr);
     }
 }

@@ -61,12 +61,14 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         timeManager = TimeManager.Instance;
+        AwakeUI();
     }
 
 
     void Update()
     {
         PrintWeather();
+        OffUI();
     }
 
     private void PrintWeather()
@@ -75,6 +77,28 @@ public class UIManager : MonoBehaviour
 
         string weathertext = "Weather : " + weather;
         m_WeatherText.text = weathertext;
+    }
+
+    private void OffUI()
+    {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            if (m_IsUIOpen == true)
+            {
+                if(m_CookUI.activeSelf == true)
+                {
+                    m_CookUI.SetActive(false);
+                }
+                if (m_InventoryUI.activeSelf == true)
+                {
+                    m_InventoryUI.SetActive(false);
+                }
+                if (m_ShopUI.activeSelf == true)
+                {
+                    m_ShopUI.SetActive(false);
+                }
+            }
+        }
     }
 
     public void SetTimeText(int minute, int hour, int day)
@@ -90,21 +114,30 @@ public class UIManager : MonoBehaviour
 
     }
 
+    private void AwakeUI()
+    {
+        m_CookUI.SetActive(true);
+        m_ShopUI.SetActive(true);
+        m_InventoryUI.SetActive(true);
+        m_CookUI.SetActive(false);
+        m_ShopUI.SetActive(false);
+        m_InventoryUI.SetActive(false);
+    }
 
 
     public void SetCookUI()
     {
-        m_CookUI.SetActive(!m_CookUI.activeSelf);
+        m_CookUI.SetActive(true);
     }
 
     public void SetShopUI()
     {
-        m_ShopUI.SetActive(!m_ShopUI.activeSelf);
+        m_ShopUI.SetActive(true);
     }
 
     public void SetInvetoryUI()
     {
-        m_InventoryUI.SetActive(!m_InventoryUI.activeSelf);
+        m_InventoryUI.SetActive(true);
     }
 
     public void SetMoneyText(int money)

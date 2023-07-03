@@ -27,5 +27,11 @@ public class Item : MonoBehaviour
         return m_ItemName.ToString();
     }
 
+    public Sprite ReturnSprite()
+    {
+        m_spr = GetComponent<SpriteRenderer>();
+        Sprite spr = m_spr.sprite;
+        return spr;
+    }
 
 }

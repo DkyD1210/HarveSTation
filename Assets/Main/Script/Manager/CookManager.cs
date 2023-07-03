@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CookManager : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class CookManager : MonoBehaviour
     private GameManager gameManager;
 
     private InventoryManager inventoryManager;
+
+    private UIManager uiManager;
 
     [Header("아이템 조합법")]
     public List<Lecipe> m_Lecipes = new List<Lecipe>();
@@ -25,6 +28,17 @@ public class CookManager : MonoBehaviour
     [SerializeField]
     List<UICookSlot> m_SlotList = new List<UICookSlot>();
 
+    [Space]
+    [SerializeField]
+    List<UIMaterialSlot> m_InfoSlotList = new List<UIMaterialSlot>();
+
+    [SerializeField]
+    private TextMeshProUGUI ItemText;
+
+    [SerializeField]
+    private int m_Index;
+    [SerializeField]
+    private int MaxIndex = 0;
 
     private void Awake()
     {
@@ -42,8 +56,47 @@ public class CookManager : MonoBehaviour
     {
         gameManager = GameManager.Instance;
         inventoryManager = InventoryManager.Instance;
+        uiManager = UIManager.Instance;
+        MaxIndex = m_Lecipes.Count;
         SetListSlot();
     }
+
+    private void Update()
+    {
+        SelctLecipe();
+    }
+
+    private void SelctLecipe()
+    {
+        if (uiManager.m_IsUIOpen == false)
+        {
+            m_Index = 0;
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (m_Index > 0)
+            {
+                m_Index--;
+            }
+            SetInfo(m_Lecipes[m_Index]);
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (m_Index + 1 < MaxIndex)
+            {
+                m_Index++;
+            }
+            SetInfo(m_Lecipes[m_Index]);
+        }
+
+        if(Input.GetKeyDown(KeyCode.J))
+        {
+            CookItem(m_Lecipes[m_Index]);
+        }
+    }
+
 
     private void SetListSlot()
     {
@@ -58,6 +111,29 @@ public class CookManager : MonoBehaviour
             slot.SetSlot(id, resualt.Name.ToString());
 
             m_SlotList.Add(slot);
+        }
+        SetInfo(m_Lecipes[0]);
+    }
+
+    private void SetInfo(Lecipe lec)
+    {
+        int slotcount = m_InfoSlotList.Count;
+        for (int i = 0; i<slotcount; i++)
+        {
+            GameObject obj = m_InfoSlotList[i].gameObject;
+            obj.SetActive(false);
+        }
+        
+        ItemText.text = lec.Resualts[0].Name.ToString();
+        List<Lecipe.Material> mat = lec.Materials;
+        int count = mat.Count;
+        for(int i = 0; i < count; i++)
+        {
+            GameObject obj = m_InfoSlotList[i].gameObject;
+            obj.SetActive(true);
+            Sprite spr = gameManager.FindItemIndex(mat[i].Name.ToString()).ReturnSprite();
+            int matcount = mat[i].Count;
+            m_InfoSlotList[i].SetMaterial(matcount, spr);
         }
     }
 

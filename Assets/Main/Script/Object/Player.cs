@@ -192,12 +192,12 @@ public class Player : MonoBehaviour
     private void PlayerTeleport()
     {
         Camera camera = Camera.main;
-        if (transform.position.x >= 35f)
+        if (transform.position.x > 35f)
         {
             //transform.position = new Vector3(45f, transform.position.y, camera.transform.position.z);
-            camera.transform.position = new Vector3(80f, camera.transform.position.y, camera.transform.position.z);
+            camera.transform.position = new Vector3(71f, camera.transform.position.y, camera.transform.position.z);
         }
-        if (transform.position.x <= 35f)
+        if (transform.position.x < 35f)
         {
             //transform.position = new Vector3(45f, transform.position.y, camera.transform.position.z);
             camera.transform.position = new Vector3(0f, camera.transform.position.y, camera.transform.position.z);
