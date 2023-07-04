@@ -32,6 +32,9 @@ public class UIManager : MonoBehaviour
 
     public GameObject m_InventoryUI;//인벤토리
 
+    [SerializeField]
+    private GameObject m_MainUI;//설명창
+
 
 
     public bool m_IsUIOpen
@@ -78,6 +81,7 @@ public class UIManager : MonoBehaviour
 
     private void OffUI()
     {
+        m_MainUI.SetActive(!m_IsUIOpen);
         if (Input.GetKeyDown(KeyCode.K))
         {
             if (m_IsUIOpen == true)

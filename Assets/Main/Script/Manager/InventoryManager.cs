@@ -92,7 +92,7 @@ public class InventoryManager : MonoBehaviour
         m_TextList[0].text = item.GetItemName();
         if (item.GetItemCount() == 0)
         {
-            m_TextList[1].text = "None";
+            m_TextList[1].text = string.Empty;
         }
         else
         {
