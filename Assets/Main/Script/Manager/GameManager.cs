@@ -17,10 +17,11 @@ public class GameManager : MonoBehaviour
     private Transform m_TrsCropLayer;
 
     [Range(0, 999999999)]
+    [SerializeField]
     public int Money;
 
     [SerializeField]
-
+    private GameObject m_Player;
 
     private void Awake()
     {
@@ -37,11 +38,30 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         uiManager = UIManager.Instance;
+
+        m_Player = GameObject.FindWithTag("Player");
     }
 
     private void Update()
     {
+        PlayerTeleport();
         uiManager.SetMoneyText(Money);
+    }
+
+    private void PlayerTeleport()
+    {
+        Camera camera = Camera.main;
+        Transform player = m_Player.transform;
+        if (player.position.x > 35f)
+        {
+            //transform.position = new Vector3(45f, transform.position.y, camera.transform.position.z);
+            camera.transform.position = new Vector3(71f, camera.transform.position.y, camera.transform.position.z);
+        }
+        if (player.position.x < 35f)
+        {
+            //transform.position = new Vector3(45f, transform.position.y, camera.transform.position.z);
+            camera.transform.position = new Vector3(0f, camera.transform.position.y, camera.transform.position.z);
+        }
     }
 
     public int GetItemCount()

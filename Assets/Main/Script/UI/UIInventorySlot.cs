@@ -29,6 +29,7 @@ public class UIInventorySlot : MonoBehaviour
     {
         ItemCountText = GetComponentInChildren<TextMeshProUGUI>();
         UIItem = transform.Find("Item");
+        ItemImage = UIItem.GetComponent<Image>();
         SetImage();
         SetItemCountText();
     }
@@ -45,30 +46,19 @@ public class UIInventorySlot : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 이미지가 있을때 스프라이트 적용
-    /// </summary>
-    /// <param name="spr"></param>
-    private void SetImage(Sprite spr)
+
+    private void SetImage(Sprite spr = null)
     {
         if (ItemImage == null)
         {
+            UIItem = transform.Find("Item");
             ItemImage = UIItem.GetComponent<Image>();
+        }
+        if (spr == null)
+        {
+            spr = DefaltImage;
         }
         ItemImage.sprite = spr;
-
-    }
-
-    /// <summary>
-    /// 이미지를 없앨때(= 기본이미지)
-    /// </summary>
-    private void SetImage()
-    {
-        if (ItemImage == null)
-        {
-            ItemImage = UIItem.GetComponent<Image>();
-        }
-        ItemImage.sprite = DefaltImage;
     }
 
     public int SetItem(string _name, Sprite sprite, int addItemCount)

@@ -100,9 +100,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eeb06af345af4348a52a5f499a1f5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_GrowDay: 1
-  m_GrowHour: 0
+  m_GrowDay: 0
+  m_GrowHour: 1
   m_GrowMinute: 0
+  GrowTime: 0
+  m_Time: 0
   m_CanHarvest: 0
   m_TimeType: 2
   m_WeatherType: 1

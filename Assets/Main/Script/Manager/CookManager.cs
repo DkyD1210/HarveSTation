@@ -68,7 +68,7 @@ public class CookManager : MonoBehaviour
 
     private void SelctLecipe()
     {
-        if (uiManager.m_IsUIOpen == false)
+        if (uiManager.m_CookUI.activeSelf == false)
         {
             m_Index = 0;
             return;

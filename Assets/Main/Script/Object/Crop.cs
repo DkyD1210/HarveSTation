@@ -41,9 +41,10 @@ public class Crop : MonoBehaviour
     [SerializeField]
     private int m_GrowMinute;
 
-    private int GrowTime;
+    [SerializeField]
+    private int GrowTime; //총 자라는 시간
 
-
+    [SerializeField]
     private int m_Time = 0; //시간경과;
 
     private int beforeTime;

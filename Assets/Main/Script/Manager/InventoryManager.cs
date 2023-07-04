@@ -55,13 +55,13 @@ public class InventoryManager : MonoBehaviour
     {
         m_SlotList.AddRange(TrsSlot.GetComponentsInChildren<UIInventorySlot>());
         m_TextList.AddRange(TrsText.GetComponentsInChildren<TextMeshProUGUI>());
-        MaxIndex = (m_SlotList.Count - 1);
+        MaxIndex = m_SlotList.Count;
         SetItemText(0);
     }
 
     private void SelectSlot()
     {
-        if (uIManager.m_IsUIOpen == false)
+        if (uIManager.m_InventoryUI == false)
         {
             m_SlotIndex = 0;
             return;
@@ -130,20 +130,6 @@ public class InventoryManager : MonoBehaviour
             if (m_SlotList[i].GetItemName() == _name)
             {
                 return i;
-            }
-        }
-        return 0;
-    }
-
-    public int FindItemCount(string _name)
-    {
-        int count = m_SlotList.Count;
-        for (int i = 0; i < count; i++)
-        {
-            if (m_SlotList[i].GetItemName() == _name)
-            {
-                int _count = m_SlotList[i].GetItemCount();
-                return _count;
             }
         }
         return 0;

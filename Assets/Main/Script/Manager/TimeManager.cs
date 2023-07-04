@@ -15,6 +15,7 @@ public class TimeManager : MonoBehaviour
     private float m_MainSecond;
     private int m_MaxSecond = 60;
     //Ка
+    [SerializeField]
     private int m_MainMinute;
     private int m_MaxMinute = 60;
 

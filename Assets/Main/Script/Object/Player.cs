@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TMPro;
 public class Player : MonoBehaviour
 {
 
@@ -21,6 +21,11 @@ public class Player : MonoBehaviour
 
     private InventoryManager inventoryManager;
     //매니저 인스턴스 끝
+
+    [SerializeField]
+    private TextMeshProUGUI m_CropText;
+    private int maxtimer = 255;
+    private float timer;
 
     [Header("이동")]
 
@@ -50,6 +55,7 @@ public class Player : MonoBehaviour
         inventoryManager = InventoryManager.Instance;
         PlayerBox = GetComponent<BoxCollider2D>();
         PlayerRigid = GetComponent<Rigidbody2D>();
+        m_CropText = GetComponentInChildren<TextMeshProUGUI>();
     }
 
 
@@ -66,9 +72,9 @@ public class Player : MonoBehaviour
         PlayerRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         PlayerMove();
-        PlayerTeleport();
         HarvestAct();
         PlantCropAct();
+
     }
 
     private void PlayerMove()
@@ -132,7 +138,8 @@ public class Player : MonoBehaviour
             {
                 m_CropName = 0;
             }
-
+            ShowCropText(m_CropName.ToString());
+            
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -189,18 +196,16 @@ public class Player : MonoBehaviour
 
     }
 
-    private void PlayerTeleport()
+    private void ShowCropText(string name)
     {
-        Camera camera = Camera.main;
-        if (transform.position.x > 35f)
+        m_CropText.text = name;
+        timer = 0;
+        while (timer < maxtimer)
         {
-            //transform.position = new Vector3(45f, transform.position.y, camera.transform.position.z);
-            camera.transform.position = new Vector3(71f, camera.transform.position.y, camera.transform.position.z);
+            timer += Time.deltaTime;
+            m_CropText.alpha = timer;
         }
-        if (transform.position.x < 35f)
-        {
-            //transform.position = new Vector3(45f, transform.position.y, camera.transform.position.z);
-            camera.transform.position = new Vector3(0f, camera.transform.position.y, camera.transform.position.z);
-        }
+
     }
+
 }

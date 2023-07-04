@@ -26,14 +26,11 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI m_MoneyText; //돈 텍스트;
 
-    [SerializeField]
-    private GameObject m_CookUI;//요리창
+    public GameObject m_CookUI;//요리창
 
-    [SerializeField]
-    private GameObject m_ShopUI;//상점창
+    public GameObject m_ShopUI;//상점창
 
-    [SerializeField]
-    private GameObject m_InventoryUI;//인벤토리
+    public GameObject m_InventoryUI;//인벤토리
 
 
 

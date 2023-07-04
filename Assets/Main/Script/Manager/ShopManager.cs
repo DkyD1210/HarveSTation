@@ -105,7 +105,7 @@ public class ShopManager : MonoBehaviour
 
     private void SelectSlot()
     {
-        if (uiManager.m_IsUIOpen == false)
+        if (uiManager.m_ShopUI.activeSelf == false)
         {
             m_SlotIndex = 0;
             return;
@@ -130,7 +130,7 @@ public class ShopManager : MonoBehaviour
         SetSlotText(m_SlotList[m_SlotIndex]);
 
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.J))
         {
             ActItem(m_SlotList[m_SlotIndex]);
         }
