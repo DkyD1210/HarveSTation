@@ -37,5 +37,11 @@ public enum m_eItemName
     Sandwitch,
 }
 
+public enum m_eTeleport
+{
+    Front,
+    Back,
+}
+
 
 

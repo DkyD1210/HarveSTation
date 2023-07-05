@@ -24,8 +24,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private TextMeshProUGUI m_CropText;
-    private int maxtimer = 255;
-    private float timer;
 
     [Header("이동")]
 
@@ -47,6 +45,7 @@ public class Player : MonoBehaviour
     }
 
     private float ray = 1;//raycast 방향용
+
 
     void Start()
     {
@@ -138,8 +137,7 @@ public class Player : MonoBehaviour
             {
                 m_CropName = 0;
             }
-            ShowCropText(m_CropName.ToString());
-            
+            StartCoroutine(ShowCropText(m_CropName.ToString()));
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -196,16 +194,17 @@ public class Player : MonoBehaviour
 
     }
 
-    private void ShowCropText(string name)
+
+    IEnumerator ShowCropText(string name)
     {
         m_CropText.text = name;
-        timer = 0;
-        while (timer < maxtimer)
+        m_CropText.color = new Color(0, 0, 0, 1);
+        while (m_CropText.color.a > 0.0f)
         {
-            timer += Time.deltaTime;
-            m_CropText.alpha = timer;
+            m_CropText.color -= new Color(0, 0, 0, 1) * Time.deltaTime;
+            yield return null;
         }
-
     }
+
 
 }

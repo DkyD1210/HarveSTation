@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject m_Player;
 
+
+
     private void Awake()
     {
         if (Instance == null)
@@ -35,6 +37,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [SerializeField]
+    private Transform m_TeleportFront;
+
+    [SerializeField]
+    private Transform m_TeleportBack;
+
+    public bool CanTeleport = true;
+
     private void Start()
     {
         uiManager = UIManager.Instance;
@@ -44,25 +54,27 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        PlayerTeleport();
         uiManager.SetMoneyText(Money);
     }
 
-    private void PlayerTeleport()
+
+    public void PlayerTeleport(m_eTeleport tel)
     {
         Camera camera = Camera.main;
         Transform player = m_Player.transform;
-        if (player.position.x > 35f)
+        if (tel == m_eTeleport.Front)
         {
-            //transform.position = new Vector3(45f, transform.position.y, camera.transform.position.z);
+            player.transform.position = m_TeleportBack.transform.position;
+            camera.transform.position = new Vector3(0f, camera.transform.position.y, camera.transform.position.z);
+            
+        }
+        else
+        {
+            player.transform.position = m_TeleportFront.transform.position;
             camera.transform.position = new Vector3(71f, camera.transform.position.y, camera.transform.position.z);
         }
-        if (player.position.x < 35f)
-        {
-            //transform.position = new Vector3(45f, transform.position.y, camera.transform.position.z);
-            camera.transform.position = new Vector3(0f, camera.transform.position.y, camera.transform.position.z);
-        }
     }
+
 
     public int GetItemCount()
     {
